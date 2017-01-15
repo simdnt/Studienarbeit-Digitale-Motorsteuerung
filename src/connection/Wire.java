@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public class Wire {
 
+	static private GUI sGUI;
 	private static File ValueFile,ConnectionStateFile;
 	static ConnectionStatus state;
 	static final ConnectionStatus Connected = new StateConnected(),
@@ -22,6 +23,8 @@ public class Wire {
 			FileOutputStream out = new FileOutputStream(ValueFile,false);
 			out.write(aValue?1:0);
 			out.close();
+			if(sGUI!=null)
+				sGUI.setValue(aValue);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -82,5 +85,11 @@ public class Wire {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	static void setGUI(GUI aGUI){
+		sGUI=aGUI;
+	}
+	static boolean IsConnected(){
+		return state == Connected;
 	}
 }

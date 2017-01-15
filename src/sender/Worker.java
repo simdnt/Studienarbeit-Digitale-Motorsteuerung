@@ -18,9 +18,7 @@ public class Worker implements Runnable{
 		while(true){
 			int ValueToSend = mGUI.getSliderValue();
 			sendTransmissionBeginns();
-			System.out.println("T sent");
 			sendDigits(ValueToSend);
-			System.out.println("Value sent: "+ValueToSend);
 		}
 	}
 	private void sendDigits(int aValue){

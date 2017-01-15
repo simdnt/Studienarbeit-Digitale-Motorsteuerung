@@ -12,24 +12,26 @@ import javax.swing.JTextArea;
 
 class GUI extends JFrame{
 	private static final long serialVersionUID = 1537498402992201313L;
-	private JButton mButtonConnect, mButtonDisconnect;
 	private JTextArea mStatusINFO;
+	private Graph mGraph;
 	
 	public GUI(){
 		super("ConnectionManager");
-		this.setBounds(0, 200, 600, 100);
+		this.setBounds(0, 200, 600, 200);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initcomponents();
 		this.setVisible(true);
+		Wire.setGUI(this);
 	}
 
 	private void initcomponents() {
-		this.setLayout(new BorderLayout(10,10));
+		this.setLayout(new GridLayout(2,1));
+		JPanel lPanelTopHalf = new JPanel(new BorderLayout(10,10));
 		JPanel p = new JPanel(new GridLayout(1,2));
-		this.getContentPane().add(p,BorderLayout.CENTER);
+		lPanelTopHalf.add(p,BorderLayout.CENTER);
 		
-		mButtonConnect=new JButton("Connect");
-		mButtonConnect.addActionListener(new ActionListener() {
+		JButton lButtonConnect=new JButton("Connect");
+		lButtonConnect.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -37,10 +39,10 @@ class GUI extends JFrame{
 				setStatusText(true);
 			}
 		});
-		p.add(mButtonConnect);
+		p.add(lButtonConnect);
 		
-		mButtonDisconnect=new JButton("Disconnect");
-		mButtonDisconnect.addActionListener(new ActionListener() {
+		JButton lButtonDisconnect=new JButton("Disconnect");
+		lButtonDisconnect.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -48,19 +50,26 @@ class GUI extends JFrame{
 				setStatusText(false);
 			}
 		});
-		p.add(mButtonDisconnect);
+		p.add(lButtonDisconnect);
 		
 		mStatusINFO=new JTextArea();
 		mStatusINFO.setEditable(false);
 		Wire.setState();
 		setStatusText(Wire.state==Wire.Connected);
-		this.getContentPane().add(mStatusINFO,BorderLayout.SOUTH);
-	
+		lPanelTopHalf.add(mStatusINFO,BorderLayout.SOUTH);
+
+		this.getContentPane().add(lPanelTopHalf);
+		
+		this.getContentPane().add(mGraph = new Graph());
 	}
 	private void setStatusText(boolean aIsConnected){
 		if(aIsConnected)
 			mStatusINFO.setText("Currently the Wire is connected");
 		else
 			mStatusINFO.setText("Currently the Wire is disconnected");
+	}
+
+	void setValue(boolean aValue){
+		mGraph.setValue(aValue);
 	}
 }

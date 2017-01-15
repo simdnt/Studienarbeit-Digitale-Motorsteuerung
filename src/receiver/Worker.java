@@ -18,10 +18,8 @@ public class Worker implements Runnable{
 	public void run() {
 		while(true){
 			reconTransmissionBeginning();
-			System.out.println("recT");
 			reconDigits();
 			mGUI.received(digitsToInt());
-			System.out.println("recD");
 		}
 	}
 
