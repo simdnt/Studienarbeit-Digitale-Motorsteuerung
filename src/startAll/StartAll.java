@@ -1,6 +1,6 @@
 package startAll;
 
-public class Start {
+public class StartAll {
 
 	public static void main(String[] args) {
 		sender.StartSender.main(null);
