@@ -17,27 +17,30 @@ public class Worker implements Runnable{
 	public void run() {
 		while(true){
 			int ValueToSend = mGUI.getSliderValue();
-			System.out.println("Value sent: "+ValueToSend);
 			sendTransmissionBeginns();
-			for (int i = 0; i < 8; i++) {
-				sendDigit(ValueToSend%2==1);
-				ValueToSend/=2;
-			}
-			sendDigit(false);//Falls letztes Digit 1 war muss Änderung erfolgen befor TransmissionBeginns!
+			System.out.println("T sent");
+			sendDigits(ValueToSend);
+			System.out.println("Value sent: "+ValueToSend);
 		}
 	}
-
+	private void sendDigits(int aValue){
+		for (int i = 0; i < 8; i++) {
+			sendDigit(aValue%2==1);
+			aValue/=2;
+		}
+	}
 	private void sendDigit(boolean aDigit) {
-		Wire.setValue(!aDigit);
-		Wait.Full();
 		Wire.setValue(aDigit);
 		Wait.Full();
 	}
 	
-	//Sendet 5 High Einheiten als STX
+	//Sendet 15 High Einheiten als STX
 	private void sendTransmissionBeginns() {
+		Wire.setValue(false);
+		Wait.Full();
+		Wait.Full();
 		Wire.setValue(true);
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 20; i++)
 			Wait.Full();
 		Wire.setValue(false);
 		Wait.Half();

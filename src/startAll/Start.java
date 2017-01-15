@@ -7,5 +7,4 @@ public class Start {
 		receiver.StartReceiver.main(null);
 		connection.StartConnectionManager.main(null);
 	}
-
 }
