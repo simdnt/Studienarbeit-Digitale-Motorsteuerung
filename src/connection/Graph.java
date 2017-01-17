@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
-import waitLib.Wait;
 
 import javax.swing.JComponent;
 
@@ -17,7 +16,7 @@ public class Graph extends JComponent implements ActionListener{
 	Timer mTimer;
 
 	public Graph(){
-		mTimer = new javax.swing.Timer(Wait.Short*3, this);
+		mTimer = new javax.swing.Timer(10, this);
 		mTimer.start();
 	}
 
