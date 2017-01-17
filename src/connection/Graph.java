@@ -12,9 +12,8 @@ import javax.swing.JComponent;
 
 public class Graph extends JComponent implements ActionListener{
 	private static final long serialVersionUID = 8245471415067104760L;
-	private boolean[] mValuesOverTime = new boolean[600];
-	private boolean[] mConnecOverTime = new boolean[600];
-	boolean mCurrentValue = false;
+	private boolean[] mSenderValuessOverTime = new boolean[600];
+	private boolean[] mReceiverValuesOverTime = new boolean[600];
 	Timer mTimer;
 
 	public Graph(){
@@ -25,29 +24,25 @@ public class Graph extends JComponent implements ActionListener{
 	@Override
 	public void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
-		for (int i = 0; i < mValuesOverTime.length; i++) {
-			g.fillRect(i, mValuesOverTime[i]?10:30, 1, mValuesOverTime[i]?20:1);
+		for (int i = 0; i < mSenderValuessOverTime.length; i++) {
+			g.fillRect(i, mSenderValuessOverTime[i]?10:30, 1, mSenderValuessOverTime[i]?20:1);
 		}
-		for (int i = 0; i < mConnecOverTime.length; i++) {
-			boolean big = mConnecOverTime[i]&&mValuesOverTime[i];
-			g.fillRect(i, big?40:60, 1, big?20:1);
+		for (int i = 0; i < mReceiverValuesOverTime.length; i++) {
+			g.fillRect(i, mReceiverValuesOverTime[i]?40:60, 1, mReceiverValuesOverTime[i]?20:1);
 		}
-	}
-	void setValue(boolean aValue){
-		mCurrentValue=aValue;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for (int i = 0; i < mValuesOverTime.length-1; i++) {
-			mValuesOverTime[i]=mValuesOverTime[i+1];
+		for (int i = 0; i < mSenderValuessOverTime.length-1; i++) {
+			mSenderValuessOverTime[i]=mSenderValuessOverTime[i+1];
 		}
-		mValuesOverTime[mValuesOverTime.length-1]=mCurrentValue;
+		mSenderValuessOverTime[mSenderValuessOverTime.length-1]=Wire.SenderValue();
 
-		for (int i = 0; i < mConnecOverTime.length-1; i++) {
-			mConnecOverTime[i]=mConnecOverTime[i+1];
+		for (int i = 0; i < mReceiverValuesOverTime.length-1; i++) {
+			mReceiverValuesOverTime[i]=mReceiverValuesOverTime[i+1];
 		}
-		mConnecOverTime[mConnecOverTime.length-1]=Wire.IsConnected();
+		mReceiverValuesOverTime[mReceiverValuesOverTime.length-1]=Wire.ReceiverValue();
 		repaint();
 	}
 

@@ -34,18 +34,18 @@ public class Worker implements Runnable{
 		return ret;
 	}
 
-	//schreibt gelesene Werte in digits und gibt zurück ob der gesendete Wert vollständig gelesen werden konnte
+	//schreibt gelesene Werte in digits und gibt zuruek ob der gesendete Wert vollständig gelesen werden konnte
 	private void reconDigits() {
 		for (int i = 0; i < digits.length; i++) {
 			Wait.Full();
-			digits[i]=Wire.Value();
+			digits[i]=Wire.ReceiverValue();
 		}
 	}
 
 	private void reconTransmissionBeginning() {
 		int highCount=0, lowCount=0;
 		while(true){
-			if(Wire.Value()){
+			if(Wire.ReceiverValue()){
 				highCount++;
 				lowCount=0;
 			}else{
@@ -54,7 +54,7 @@ public class Worker implements Runnable{
 			}
 			Wait.Full();
 			if(highCount>18){
-				while(Wire.Value())
+				while(Wire.ReceiverValue())
 					Wait.Short();
 				return;
 			}

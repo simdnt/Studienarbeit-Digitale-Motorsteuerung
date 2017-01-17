@@ -13,7 +13,6 @@ import javax.swing.JTextArea;
 class GUI extends JFrame{
 	private static final long serialVersionUID = 1537498402992201313L;
 	private JTextArea mStatusINFO;
-	private Graph mGraph;
 	
 	public GUI(){
 		super("ConnectionManager");
@@ -21,7 +20,6 @@ class GUI extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initcomponents();
 		this.setVisible(true);
-		Wire.setGUI(this);
 	}
 
 	private void initcomponents() {
@@ -54,13 +52,12 @@ class GUI extends JFrame{
 		
 		mStatusINFO=new JTextArea();
 		mStatusINFO.setEditable(false);
-		Wire.setState();
-		setStatusText(Wire.state==Wire.Connected);
+		setStatusText(Wire.IsConnected());
 		lPanelTopHalf.add(mStatusINFO,BorderLayout.SOUTH);
 
 		this.getContentPane().add(lPanelTopHalf);
 		
-		this.getContentPane().add(mGraph = new Graph());
+		this.getContentPane().add(new Graph());
 	}
 	private void setStatusText(boolean aIsConnected){
 		if(aIsConnected)
@@ -69,7 +66,4 @@ class GUI extends JFrame{
 			mStatusINFO.setText("Currently the Wire is disconnected");
 	}
 
-	void setValue(boolean aValue){
-		mGraph.setValue(aValue);
-	}
 }
