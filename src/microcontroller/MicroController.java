@@ -93,6 +93,8 @@ public abstract class MicroController {
 			super("Receiver.asm");
 		}
 		public int getReceivedValue(){
+			if(mRAM[10]<0)
+				return mRAM[10]+256;
 			return mRAM[10];
 		}
 
@@ -166,22 +168,30 @@ public abstract class MicroController {
 						break;
 					case "nop":
 						break;
-					case "anl":
+					case "and":
 						break;
-					case "orl":
+					case "or":
 						break;
 					case "shl"://shift left
+						int zw1 = mMC.mRAM[getValue(args[0])];
+						if(zw1<0)
+							zw1+=256;
+						mMC.mRAM[getValue(args[0])] = (byte)(zw1*2);
 						break;
 					case "shr"://shift right
 						int zw = mMC.mRAM[getValue(args[0])];
 						if(zw<0)
-							zw+=255;
+							zw+=256;
 						mMC.mRAM[getValue(args[0])] = (byte)(zw/2);
 						break;
 					case "jmp":
 						mMC.mProgrammCounter = getValue(args[0]);
 						return;
 					case "jeq":
+						if(mMC.mRAM[getValue(args[0])]==0){
+							mMC.mProgrammCounter = getValue(args[1]);
+							return;
+						}
 						break;
 					case "jne":
 						if(mMC.mRAM[getValue(args[0])]!=0){
@@ -200,7 +210,7 @@ public abstract class MicroController {
 					case "xby":
 						int b = mMC.mRAM[getValue(args[0])];
 						if(b<0)
-							b=b+255;
+							b+=256;
 						Wire.setValue(b%2==1);
 						break;
 						

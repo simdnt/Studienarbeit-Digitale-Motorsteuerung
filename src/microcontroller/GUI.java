@@ -26,8 +26,8 @@ public abstract class GUI extends JFrame{
 	protected MicroController mMC;
 	
 
-	public GUI(){
-		super("Sender");
+	public GUI(String aTitle){
+		super(aTitle);
 		setBounds(0, 0, 600, 100);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initComponents();
@@ -65,7 +65,7 @@ public abstract class GUI extends JFrame{
 		private static final long serialVersionUID = -6233383830213010970L;
 		private SenderController mC(){return (SenderController)mMC;}
 		public SenderGUI(){
-			super();
+			super("Sender");
 			mLabel.setText("Stellen Sie den zu uebertragenden Wert ein: 123");
 			mSlider.addChangeListener(new ChangeListener() {
 				
@@ -87,7 +87,7 @@ public abstract class GUI extends JFrame{
 		private Timer tm = new Timer(5, this);
 		
 		public ReceiverGUI(){
-			super();
+			super("Receiver");
 			this.setLocation(0, 100);
 			mLabel.setText("Der empfangene Wert ist: unbestimmt");
 			mSlider.setEnabled(false);
